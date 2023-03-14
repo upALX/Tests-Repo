@@ -1,0 +1,137 @@
+{
+    "title": "operation-schema",
+    "type": "object",
+    "properties": {
+      "asset": {
+        "type": "object",
+        "required": [
+          "selic_identifier",
+          "due_date"
+        ],
+        "properties": {
+          "isin_code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "selic_identifier": {
+            "type": "string",
+            "minLength": 1
+          },
+          "due_date": {
+            "type": "string",
+            "pattern": "^([\\+-]?\\d{4}(?!\\d{2}\\b))((-?)((0[1-9]|1[0-2])(\\3([12]\\d|0[1-9]|3[01]))?|W([0-4]\\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\\d|[12]\\d{2}|3([0-5]\\d|6[1-6])))?)?$"
+          }
+        }
+      },
+      "selic_operation_number": {
+        "type": "string",
+        "minLength": 1
+      },
+      "assignor_account": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 12
+      },
+      "assignee_account": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 12
+      },
+      "assignor_document_number": {
+        "type": "string",
+        "minLength": 14,
+        "maxLength": 14
+      },
+      "quantity": {
+        "type": "number",
+        "minimum": 1
+      },
+      "unit_price": {
+        "type": "number",
+        "minimum": 0.01
+      }
+    },
+    "required": [
+      "asset",
+      "assignor_account",
+      "assignee_account",
+      "quantity",
+      "unit_price"
+    ],
+    "oneOf": [
+      {
+        "type": "object",
+        "properties": {
+          "operation_type": {
+            "type": "string",
+            "enum": [
+              "repo_acquisition"
+            ]
+          },
+          "expected_return_start_date": {
+            "type": "string",
+            "pattern": "^([\\+-]?\\d{4}(?!\\d{2}\\b))((-?)((0[1-9]|1[0-2])(\\3([12]\\d|0[1-9]|3[01]))?|W([0-4]\\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\\d|[12]\\d{2}|3([0-5]\\d|6[1-6])))?)?$"
+          },
+          "expected_return_end_date": {
+            "type": "string",
+            "pattern": "^([\\+-]?\\d{4}(?!\\d{2}\\b))((-?)((0[1-9]|1[0-2])(\\3([12]\\d|0[1-9]|3[01]))?|W([0-4]\\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\\d|[12]\\d{2}|3([0-5]\\d|6[1-6])))?)?$"
+          },
+          "agreed_return_unit_price": {
+            "type": "number",
+            "minimum": 0.01
+          }
+        },
+        "required": [
+          "operation_type",
+          "expected_return_start_date",
+          "expected_return_end_date",
+          "agreed_annual_fee"
+        ]
+      },
+      {
+        "type": "object",
+        "properties": {
+          "operation_type": {
+            "type": "string",
+            "enum": [
+              "definitive_sell"
+            ]
+          },
+          "expected_return_start_date": {
+            "type": "string",
+            "pattern": "^([\\+-]?\\d{4}(?!\\d{2}\\b))((-?)((0[1-9]|1[0-2])(\\3([12]\\d|0[1-9]|3[01]))?|W([0-4]\\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\\d|[12]\\d{2}|3([0-5]\\d|6[1-6])))?)?$"
+          },
+          "expected_return_end_date": {
+            "type": "string",
+            "pattern": "^([\\+-]?\\d{4}(?!\\d{2}\\b))((-?)((0[1-9]|1[0-2])(\\3([12]\\d|0[1-9]|3[01]))?|W([0-4]\\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\\d|[12]\\d{2}|3([0-5]\\d|6[1-6])))?)?$"
+          },
+          "agreed_return_unit_price": {
+            "type": "number",
+            "minimum": 0.01
+          }
+        },
+        "required": [
+          "operation_type",
+          "expected_return_start_date",
+          "expected_return_end_date",
+          "agreed_annual_fee"
+        ]
+      },
+      {
+        "type": "object",
+        "properties": {
+          "operation_type": {
+            "type": "string",
+            "enum": [
+              "definitive_acquisition",
+              "definitive_sell",
+              "repo_acquisition"
+            ]
+          }
+        },
+        "required": [
+          "operation_type"
+        ]
+      }
+    ]
+  }
